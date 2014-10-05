@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package knapsack;
 
 import java.util.Collections;
@@ -10,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- *
  * @author RainWhileLoop
  */
 public abstract class Knapsack {
@@ -63,9 +57,9 @@ public abstract class Knapsack {
     public static void fractionKnapsack(List<Item> items, Float conditionMaxWeight) {
         Float sumValue = 0.0f;
         Float sumWeight = 0.0f;
-//        for (Item item : items) {
-//            System.out.println("Item NO." + item.getId() + "\tweight : " + item.getWeight() + "\tvalue : " + item.getValue() + "\tratio : " + item.getRatio());
-//        }
+        for (Item item : items) {
+            System.out.println("Item NO." + item.getId() + "\tweight : " + item.getWeight() + "\tvalue : " + item.getValue() + "\tratio : " + item.getRatio());
+        }
         
         Collections.sort(items, compare());
         int i = 0;
