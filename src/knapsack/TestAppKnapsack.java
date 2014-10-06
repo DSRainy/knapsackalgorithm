@@ -8,7 +8,6 @@ package knapsack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import static knapsack.Knapsack.zeroOneKnapsack;
 
 /**
  *
@@ -40,9 +39,11 @@ public class TestAppKnapsack {
 
         System.out.print("enter Max Weight : ");
         conditionMaxWeight = scan.nextFloat();
-        Knapsack.fractionKnapsack(items, conditionMaxWeight);
-        Float maxValue = Knapsack.getMaxValue();
-        Float maxWeight = Knapsack.getMaxWeight();
+        Knapsack knapsack = new Knapsack();
+        knapsack.fractionKnapsack(items, conditionMaxWeight);
+//        knapsack.zeroOneKnapsack(items, conditionMaxWeight);
+        Float maxValue = knapsack.getMaxValue();
+        Float maxWeight = knapsack.getMaxWeight();
         System.out.println("Max value = " + maxValue);
         System.out.println("Max weight = " + maxWeight);
 

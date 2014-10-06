@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * @author RainWhileLoop
  */
-public abstract class Knapsack {
+public class Knapsack {
 
-    private static Float maxWeight;
-    private static Float maxValue;
+    private Float maxWeight;
+    private Float maxValue;
 
     /**
      * zeroOneKnapsack use for find max possible maxValue by<br/>
@@ -20,7 +20,7 @@ public abstract class Knapsack {
      * @param items a List of Item class
      * @param conditionMaxWeight a condition of max maxWeight
      */
-    public static void zeroOneKnapsack(List<Item> items, Float conditionMaxWeight) {
+    public void zeroOneKnapsack(List<Item> items, Float conditionMaxWeight) {
         Float value = 0.0f;
         Float weight = 0.0f;
 //        for (Item item : items) {
@@ -37,13 +37,13 @@ public abstract class Knapsack {
         } while (i < items.size() && weight < conditionMaxWeight);
         weight -= items.get(--i).getWeight();
 //        System.out.println("after sorting by ratio --------------------");
-//
-//        for (Item item : items) {
+
+        for (Item item : items) {
 //            System.out.println("Item NO." + item.getId() + "\tweight : " + item.getWeight() + "\tvalue : " + item.getValue() + "\tratio : " + item.getRatio());
-//        }
-//        System.out.println("Max Weight = " + possibleWeight);
-        Knapsack.maxWeight = weight;
-        Knapsack.maxValue = value;
+        }
+//        System.out.println("Max Weight = " + weight);
+        this.maxWeight = weight;
+        this.maxValue = value;
     }
 
     /**
@@ -54,53 +54,57 @@ public abstract class Knapsack {
      * @param items a List of Item class
      * @param conditionMaxWeight a condition of max maxWeight
      */
-    public static void fractionKnapsack(List<Item> items, Float conditionMaxWeight) {
+    public void fractionKnapsack(List<Item> items, Float conditionMaxWeight) {
         Float sumValue = 0.0f;
         Float sumWeight = 0.0f;
-        for (Item item : items) {
-            System.out.println("Item NO." + item.getId() + "\tweight : " + item.getWeight() + "\tvalue : " + item.getValue() + "\tratio : " + item.getRatio());
-        }
-        
+//        for (Item item : items) {
+//            System.out.println("Item NO." + item.getId() + "\tweight : " + item.getWeight() + "\tvalue : " + item.getValue() + "\tratio : " + item.getRatio());
+//        }
+
         Collections.sort(items, compare());
         int i = 0;
         do {
-            sumWeight += items.get(i).getWeight();
+            Item currentItem = items.get(i);
+            Item beforeItem = null;
+            if (i > 0) {
+                beforeItem = items.get(i - 1);
+            }
+            sumWeight += currentItem.getWeight();
             if (sumWeight < conditionMaxWeight) {
-                sumValue += items.get(i).getValue();
+                sumValue += currentItem.getValue();
             } else {
-                sumValue -= items.get(i - 1).getValue();
-                sumWeight -= items.get(i).getWeight();
-                sumWeight -= items.get(i - 1).getWeight();
-//                System.out.println("maxWeight of item \t: " + items.get(i-1).getWeight());
+                sumValue -= beforeItem.getValue();
+                sumWeight -= currentItem.getWeight();
+                sumWeight -= beforeItem.getWeight();
+//                System.out.println("maxWeight of item \t: " + beforeItem.getWeight());
 //                System.out.println("sumWeight \t: " + sumWeight);
                 Float difference = conditionMaxWeight - sumWeight;
 //                System.out.println("diff \t\t: " + difference);
 
-                Float ratio = items.get(i - 1).getWeight() / difference;
+                Float ratio = beforeItem.getWeight() / difference;
 //                System.out.println("ratio \t\t: " + ratio);
 
                 sumWeight += difference;
 //                System.out.println("sumValue \t: " + sumValue);
-                sumValue += items.get(i - 1).getValue() * ratio;
+                sumValue += beforeItem.getValue() * ratio;
             }
             i++;
         } while (i < items.size() && sumWeight < conditionMaxWeight);
 
 //        System.out.println("after sorting by ratio --------------------");
-//
 //        for (Item item : items) {
 //            System.out.println("Item NO." + item.getId() + "\tweight : " + item.getWeight() + "\tvalue : " + item.getValue() + "\tratio : " + item.getRatio());
 //        }
-//        System.out.println("Max Weight = " + possibleWeight);
-        Knapsack.maxWeight = sumWeight;
-        Knapsack.maxValue = sumValue;
+//        System.out.println("Max Weight = " + sumWeight);
+        this.maxWeight = sumWeight;
+        this.maxValue = sumValue;
     }
 
-    public static Float getMaxWeight() {
+    public Float getMaxWeight() {
         return maxWeight;
     }
 
-    public static Float getMaxValue() {
+    public Float getMaxValue() {
         return maxValue;
     }
 
